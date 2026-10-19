@@ -22,8 +22,14 @@ if st.button("Predict Yield", type="primary"):
         with open("configs/config.json", "r") as f:
             config = json.load(f)
 
-        # Initialize model
-        model = YieldNet(config)
+        # Handle config format properly
+        if hasattr(YieldNet, '__init__') and 'config' in YieldNet.__init__.__code__.co_varnames:
+            model = YieldNet(config)
+        else:
+            input_dim = config.get("input_dim", 3)
+            hidden_dims = config.get("hidden_dims", [64, 32])
+            output_dim = config.get("output_dim", 1)
+            model = YieldNet(input_dim, hidden_dims, output_dim)
         
         # Load model weights
         checkpoint = torch.load("results/model.pth", map_location=torch.device('cpu'))
@@ -36,7 +42,7 @@ if st.button("Predict Yield", type="primary"):
             
         model.eval()
 
-        # Min-Max Normalization (matching training ranges: 100-500°C, 1-100 bar, 0.1-5.0 M)
+        # Normalization (matching training ranges: 100-500°C, 1-100 bar, 0.1-5.0 M)
         temp_norm = (temp - 100.0) / (500.0 - 100.0)
         pressure_norm = (pressure - 1.0) / (100.0 - 1.0)
         conc_norm = (conc - 0.1) / (5.0 - 0.1)
@@ -46,9 +52,7 @@ if st.button("Predict Yield", type="primary"):
         with torch.no_grad():
             raw_pred = model(input_tensor).item()
 
-        # Keep prediction within realistic 0% - 100% bounds
         yield_pred = max(0.0, min(100.0, raw_pred))
-
         st.success(f"Predicted Yield: {yield_pred:.2f}%")
 
     except Exception as e:
