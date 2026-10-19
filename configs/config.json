@@ -1,0 +1,30 @@
+{
+  "seed": 42,
+  "data": {
+    "n_samples": 2000,
+    "noise_std": 2.0,
+    "path": "data/reaction_yield.csv"
+  },
+  "split": {
+    "train": 0.70,
+    "val": 0.15,
+    "test": 0.15
+  },
+  "model": {
+    "hidden_layers": [64, 32],
+    "activation": "relu"
+  },
+  "training": {
+    "optimizer": "adam",
+    "learning_rate": 0.001,
+    "weight_decay": 1e-5,
+    "batch_size": 64,
+    "max_epochs": 600,
+    "patience": 40
+  },
+  "cv_folds": 5,
+  "baselines": {
+    "random_forest_trees": 300,
+    "polynomial_degree": 2
+  }
+}
