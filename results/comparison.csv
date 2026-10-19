@@ -1,0 +1,5 @@
+model,r2,mae,rmse
+Neural Network (YieldNet),0.9912,1.7962,2.3418
+Linear Regression,0.1924,19.2102,22.4861
+"Polynomial Regression (deg 2, RSM-style)",0.7165,11.5203,13.3215
+Random Forest,0.987,2.1444,2.8535

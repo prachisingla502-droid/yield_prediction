@@ -1,0 +1,313 @@
+{
+  "config": {
+    "seed": 42,
+    "data": {
+      "n_samples": 2000,
+      "noise_std": 2.0,
+      "path": "data/reaction_yield.csv"
+    },
+    "split": {
+      "train": 0.7,
+      "val": 0.15,
+      "test": 0.15
+    },
+    "model": {
+      "hidden_layers": [
+        64,
+        32
+      ],
+      "activation": "relu"
+    },
+    "training": {
+      "optimizer": "adam",
+      "learning_rate": 0.001,
+      "weight_decay": 1e-05,
+      "batch_size": 64,
+      "max_epochs": 600,
+      "patience": 40
+    },
+    "cv_folds": 5,
+    "baselines": {
+      "random_forest_trees": 300,
+      "polynomial_degree": 2
+    }
+  },
+  "dataset": {
+    "n_samples": 2000,
+    "missing_values": 0,
+    "summary": {
+      "temperature_K": {
+        "count": 2000.0,
+        "mean": 375.425,
+        "std": 43.567,
+        "min": 300.1,
+        "25%": 336.6,
+        "50%": 374.4,
+        "75%": 414.2,
+        "max": 449.9
+      },
+      "pressure_bar": {
+        "count": 2000.0,
+        "mean": 25.168,
+        "std": 14.203,
+        "min": 1.03,
+        "25%": 13.042,
+        "50%": 25.26,
+        "75%": 37.54,
+        "max": 49.99
+      },
+      "concentration_molL": {
+        "count": 2000.0,
+        "mean": 1.028,
+        "std": 0.54,
+        "min": 0.101,
+        "25%": 0.559,
+        "50%": 1.018,
+        "75%": 1.489,
+        "max": 1.999
+      },
+      "yield_pct": {
+        "count": 2000.0,
+        "mean": 31.509,
+        "std": 25.139,
+        "min": 0.0,
+        "25%": 8.395,
+        "50%": 24.795,
+        "75%": 54.02,
+        "max": 83.35
+      }
+    },
+    "correlation_with_yield": {
+      "temperature_K": 0.449,
+      "pressure_bar": 0.097,
+      "concentration_molL": -0.016
+    },
+    "share_yield_below_10pct": 0.285
+  },
+  "split_sizes": {
+    "train": 1400,
+    "val": 300,
+    "test": 300
+  },
+  "scaler": {
+    "mean": {
+      "temperature_K": 375.8044,
+      "pressure_bar": 24.801,
+      "concentration_molL": 1.0397
+    },
+    "std": {
+      "temperature_K": 43.2443,
+      "pressure_bar": 14.167,
+      "concentration_molL": 0.5474
+    },
+    "target_mean": 32.1205,
+    "target_std": 25.1899
+  },
+  "neural_network": {
+    "r2": 0.9912404524814864,
+    "mae": 1.796212292424838,
+    "rmse": 2.341790446518844,
+    "epochs_run": 319,
+    "best_epoch": 279,
+    "parameters": 2369,
+    "train_seconds": 16.58
+  },
+  "residuals": {
+    "mean": 0.2107,
+    "std": 2.3323,
+    "share_within_2std": 0.96,
+    "corr_abs_resid_vs_pred": 0.0623,
+    "max_abs": 9.687,
+    "pred_min": -0.577,
+    "pred_max": 80.313,
+    "by_predicted_band": {
+      "< 20 %": {
+        "n": 144,
+        "mean": -0.078,
+        "std": 2.245
+      },
+      "20-60 %": {
+        "n": 101,
+        "mean": 0.313,
+        "std": 2.375
+      },
+      "> 60 %": {
+        "n": 55,
+        "mean": 0.779,
+        "std": 2.357
+      }
+    },
+    "noise_floor_std": 2.0
+  },
+  "noise_ceiling": {
+    "r2": 0.9932191396137076,
+    "mae": 1.6207596661474062,
+    "rmse": 2.0603907657149714
+  },
+  "comparison": {
+    "Neural Network (YieldNet)": {
+      "r2": 0.9912404524814864,
+      "mae": 1.796212292424838,
+      "rmse": 2.341790446518844,
+      "epochs_run": 319,
+      "best_epoch": 279,
+      "parameters": 2369,
+      "train_seconds": 16.58
+    },
+    "Linear Regression": {
+      "r2": 0.192365178295401,
+      "mae": 19.210214982533316,
+      "rmse": 22.486129695663454,
+      "train_seconds": 0.01
+    },
+    "Polynomial Regression (deg 2, RSM-style)": {
+      "r2": 0.7165388620714204,
+      "mae": 11.52031118942055,
+      "rmse": 13.321525381911101,
+      "train_seconds": 0.01
+    },
+    "Random Forest": {
+      "r2": 0.9869939148293785,
+      "mae": 2.1443746666666623,
+      "rmse": 2.85351717138691,
+      "train_seconds": 0.55
+    }
+  },
+  "optimum_temperature": {
+    "true_T": 392.7,
+    "true_yield": 78.16,
+    "nn_T": 392.0,
+    "nn_yield": 77.96,
+    "poly_T": 388.2,
+    "poly_yield": 58.26,
+    "poly_min_test_pred": -29.72
+  },
+  "ablation": {
+    "Full model (scaled, 64-32)": {
+      "r2": 0.9912404524814864,
+      "mae": 1.796212292424838,
+      "rmse": 2.341790446518844,
+      "epochs_run": 319,
+      "best_epoch": 279,
+      "parameters": 2369,
+      "train_seconds": 16.58
+    },
+    "No feature scaling": {
+      "r2": 0.1527334986398,
+      "mae": 20.387246476109823,
+      "rmse": 23.03123419106245,
+      "epochs_run": 372,
+      "best_epoch": 332,
+      "parameters": 2369,
+      "train_seconds": 17.25
+    },
+    "Without temperature": {
+      "r2": -0.017750248093189258,
+      "mae": 22.579628818766274,
+      "rmse": 25.24223478647602,
+      "epochs_run": 69,
+      "best_epoch": 29,
+      "parameters": 2305,
+      "train_seconds": 3.1
+    },
+    "Without pressure": {
+      "r2": 0.9716754398365848,
+      "mae": 2.855951689755917,
+      "rmse": 4.211034318741655,
+      "epochs_run": 178,
+      "best_epoch": 138,
+      "parameters": 2305,
+      "train_seconds": 7.93
+    },
+    "Without concentration": {
+      "r2": 0.9654957183102754,
+      "mae": 3.275265196553866,
+      "rmse": 4.647759945053172,
+      "epochs_run": 283,
+      "best_epoch": 243,
+      "parameters": 2305,
+      "train_seconds": 13.1
+    },
+    "Architecture 32": {
+      "r2": 0.988188522812957,
+      "mae": 2.166316320097447,
+      "rmse": 2.7193136407482106,
+      "epochs_run": 600,
+      "best_epoch": 582,
+      "parameters": 161,
+      "train_seconds": 17.55
+    },
+    "Architecture 128-64-32": {
+      "r2": 0.9916346461857074,
+      "mae": 1.8193854047497113,
+      "rmse": 2.2884917472116073,
+      "epochs_run": 144,
+      "best_epoch": 104,
+      "parameters": 10881,
+      "train_seconds": 7.63
+    }
+  },
+  "cross_validation": {
+    "Neural Network (YieldNet)": {
+      "r2": {
+        "mean": 0.9906,
+        "std": 0.0005
+      },
+      "mae": {
+        "mean": 1.8854,
+        "std": 0.0563
+      },
+      "rmse": {
+        "mean": 2.4308,
+        "std": 0.0533
+      }
+    },
+    "Linear Regression": {
+      "r2": {
+        "mean": 0.2068,
+        "std": 0.0336
+      },
+      "mae": {
+        "mean": 18.7472,
+        "std": 0.7962
+      },
+      "rmse": {
+        "mean": 22.3525,
+        "std": 0.8197
+      }
+    },
+    "Polynomial Regression (deg 2, RSM-style)": {
+      "r2": {
+        "mean": 0.7127,
+        "std": 0.0227
+      },
+      "mae": {
+        "mean": 11.568,
+        "std": 0.5521
+      },
+      "rmse": {
+        "mean": 13.4369,
+        "std": 0.5362
+      }
+    },
+    "Random Forest": {
+      "r2": {
+        "mean": 0.9882,
+        "std": 0.0013
+      },
+      "mae": {
+        "mean": 2.0118,
+        "std": 0.0527
+      },
+      "rmse": {
+        "mean": 2.7155,
+        "std": 0.1193
+      }
+    }
+  },
+  "environment": {
+    "torch": "2.14.1+cpu",
+    "numpy": "1.26.4",
+    "pandas": "2.2.2"
+  }
+}

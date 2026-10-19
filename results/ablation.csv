@@ -1,0 +1,8 @@
+variant,r2,mae,rmse
+"Full model (scaled, 64-32)",0.9912,1.7962,2.3418
+No feature scaling,0.1527,20.3872,23.0312
+Without temperature,-0.0178,22.5796,25.2422
+Without pressure,0.9717,2.856,4.211
+Without concentration,0.9655,3.2753,4.6478
+Architecture 32,0.9882,2.1663,2.7193
+Architecture 128-64-32,0.9916,1.8194,2.2885
